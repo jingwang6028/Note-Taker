@@ -4,7 +4,7 @@ const app = express();
 const apiRouter = require("./routers/apiRoute");
 const htmlRouter = require("./routers/htmlRoute");
 
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
