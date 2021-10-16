@@ -45,12 +45,6 @@ router.post("/notes", (req, res) => {
 // delete requested note based on id
 router.delete("/notes/:id", (req, res) => {
   const requestedId = req.params.id;
-
-  const filterNote = dbData.filter((note) => {
-    return note.id !== requestedId;
-  });
-
-  readAndAppend(filterNote, "./db/db.json");
 });
 
 module.exports = router;
