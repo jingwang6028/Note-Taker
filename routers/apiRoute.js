@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const fs = require("fs");
 // helper folder
 const {
   readFromFile,
@@ -7,8 +8,6 @@ const {
 } = require("../helpers/fsUtils");
 // npm package - shortid
 const shortid = require("shortid");
-
-const dbData = require("../db/db.json");
 
 // GET router
 router.get("/notes", (req, res) => {
@@ -45,6 +44,20 @@ router.post("/notes", (req, res) => {
 // delete requested note based on id
 router.delete("/notes/:id", (req, res) => {
   const requestedId = req.params.id;
+
+  // read from db folder db.json file
+  fs.readFile("./db/db.json", "utf-8", function (err, data) {
+    if (err) {
+      console.log(err);
+    } else {
+      const parseData = JSON.parse(data);
+
+      const NoteData = parseData.filter((note) => {
+        return note.id != requestedId;
+      });
+      writeToFile("./db/db.json", NoteData);
+    }
+  });
 });
 
 module.exports = router;
