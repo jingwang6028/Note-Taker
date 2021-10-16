@@ -1,4 +1,5 @@
 const router = require("express").Router();
+// helper folder
 const {
   readFromFile,
   writeToFile,
@@ -6,6 +7,8 @@ const {
 } = require("../helpers/fsUtils");
 // npm package - shortid
 const shortid = require("shortid");
+
+const dbData = require("../db/db.json");
 
 // GET router
 router.get("/notes", (req, res) => {
@@ -37,6 +40,17 @@ router.post("/notes", (req, res) => {
   } else {
     res.json("Error in posting new note");
   }
+});
+
+// delete requested note based on id
+router.delete("/notes/:id", (req, res) => {
+  const requestedId = req.params.id;
+
+  const filterNote = dbData.filter((note) => {
+    return note.id !== requestedId;
+  });
+
+  readAndAppend(filterNote, "./db/db.json");
 });
 
 module.exports = router;
