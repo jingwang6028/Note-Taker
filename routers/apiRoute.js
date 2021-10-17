@@ -58,6 +58,7 @@ router.delete("/notes/:id", (req, res) => {
       writeToFile("./db/db.json", NoteData);
     }
   });
+  res.json();
 });
 
 module.exports = router;
